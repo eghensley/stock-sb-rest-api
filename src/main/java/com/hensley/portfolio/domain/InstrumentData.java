@@ -37,6 +37,8 @@ public class InstrumentData extends BaseAuditEntity implements Serializable {
 	private LocalDate listedDate;
 	@OneToMany(mappedBy = "instrument", cascade = CascadeType.PERSIST)
 	private List<PriceData> prices;
+	@OneToMany(mappedBy = "instrument", cascade = CascadeType.PERSIST)
+	private List<InDayPriceData> inDayPrices;
 	
 	public InstrumentData() {
 		
@@ -163,13 +165,34 @@ public class InstrumentData extends BaseAuditEntity implements Serializable {
 		price.setInstrument(this);
 	}
 
+	/**
+	 * @return the prices
+	 */
+	public List<InDayPriceData> getInDayPrices() {
+		return inDayPrices;
+	}
+
+	/**
+	 * @param prices the prices to set
+	 */
+	public void setInDayPrices(List<InDayPriceData> inDayPrices) {
+		this.inDayPrices = inDayPrices;
+	}
+	
+	/**
+	 * @param prices the prices to set
+	 */
+	public void addInDayPrice(InDayPriceData inDayPrice) {
+		this.inDayPrices.add(inDayPrice);
+		inDayPrice.setInstrument(this);
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
-				+ Objects.hash(bloombergId, country, dayTradeRatio, listedDate, name, prices, robinhoodId, symbol);
+		result = prime * result + Objects.hash(bloombergId, country, dayTradeRatio, inDayPrices, listedDate, name,
+				prices, robinhoodId, symbol);
 		return result;
 	}
 
@@ -186,11 +209,11 @@ public class InstrumentData extends BaseAuditEntity implements Serializable {
 		}
 		InstrumentData other = (InstrumentData) obj;
 		return Objects.equals(bloombergId, other.bloombergId) && Objects.equals(country, other.country)
-				&& Objects.equals(dayTradeRatio, other.dayTradeRatio) && Objects.equals(listedDate, other.listedDate)
-				&& Objects.equals(name, other.name) && Objects.equals(prices, other.prices)
-				&& Objects.equals(robinhoodId, other.robinhoodId) && Objects.equals(symbol, other.symbol);
+				&& Objects.equals(dayTradeRatio, other.dayTradeRatio) && Objects.equals(inDayPrices, other.inDayPrices)
+				&& Objects.equals(listedDate, other.listedDate) && Objects.equals(name, other.name)
+				&& Objects.equals(prices, other.prices) && Objects.equals(robinhoodId, other.robinhoodId)
+				&& Objects.equals(symbol, other.symbol);
 	}
-
-
+	
 }
 
