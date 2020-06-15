@@ -45,14 +45,14 @@ public class PriceController {
 	@PostMapping("instrument/{instrumentOid}/add/inday")
 	public ResponseEntity<GeneralApiResponse> addNewInnerDayPrice(@PathVariable("instrumentOid") String instrumentOid,
 			@RequestBody BasicPriceDto request) {
-		GeneralApiResponse response = priceService.addNewPrice(instrumentOid, request);
+		GeneralApiResponse response = priceService.addNewInDayPrice(instrumentOid, request);
 		return new ResponseEntity<>(response, response.getStatus());
 	}
 	
 	@ApiOperation(value = "Fetch latest saved inner day price for instrument")
 	@GetMapping("instrument/{instrumentOid}/type/{type}/latest/inday")
 	public ResponseEntity<GetResponse> getLatestInnerDayPriceBySymbol(@PathVariable("instrumentOid") String instrumentOid, @PathVariable("type") PriceTypeEnum type) {
-		GetResponse response = priceService.getLatestPriceTs(instrumentOid, type);
+		GetResponse response = priceService.getLatestInDayPriceTs(instrumentOid, type);
 		return new ResponseEntity<>(response, response.getStatus());
 	}
 
